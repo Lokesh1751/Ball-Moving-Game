@@ -22,20 +22,47 @@ function keyUp(e) {
   e.preventDefault();
   keys[e.key] = false;
 }
+function movelines(){
+    let lines=document.querySelectorAll('.lines');
+    lines.forEach(function(item){
+        if(item.y >=700){
+            item.y-=750;
+        }
+        item.y+=player.speed;
+        item.style.top=item.y+"px";
+
+    })
+}
+function moveenemy(){
+    let enemy=document.querySelectorAll('.enemy');
+    enemy.forEach(function(item){
+        if(item.y >=750){
+            item.y= -300;
+            enemycar.style.left=Math.floor(Math.random()* 350) + "px";
+        }
+        item.y+=player.speed;
+        item.style.top=item.y+"px";
+
+    })
+}
 function gameplay() {
     let car=document.querySelector('.car');
     car.style.cursor="pointer"
+    let road=gamearea.getBoundingClientRect(); // complete info about gamearea div
+
     if (player.start) {
-      if (keys.ArrowUp) {
+        movelines();
+        moveenemy();
+      if (keys.ArrowUp && player.y>(road.top + 70)) {
         player.y -= player.speed;
       }
-      if (keys.ArrowDown) {
+      if (keys.ArrowDown && player.y<(road.bottom -100)) {
         player.y += player.speed;
       }
-      if (keys.ArrowLeft) {
+      if (keys.ArrowLeft && player.x>0) {
         player.x -= player.speed;
       }
-      if (keys.ArrowRight) {
+      if (keys.ArrowRight && player.x<(road.width-70)) {
         player.x += player.speed;
       }
       car.style.top=player.y + "px";
@@ -49,12 +76,29 @@ function start() {
   startscreen.classList.add("hide");
   player.start = true;
   window.requestAnimationFrame(gameplay);
+  for(var i=0;i<6;i++){
+    let roadline=document.createElement("div")
+    roadline.setAttribute("class","lines")
+    roadline.y=(i*150);
+    roadline.style.top=roadline.y+"px";
+    gamearea.appendChild(roadline)
+      
+}
   let car1 = document.createElement("div");
   car1.setAttribute("class", "car");
-  //car.innerText="hey i m ur car buddy";
   gamearea.appendChild(car1);
   player.x = car1.offsetLeft;
   player.y = car1.offsetTop;
+  for(var i=0;i<3;i++){
+    let enemycar=document.createElement("div")
+    enemycar.setAttribute("class","enemy")
+    enemycar.y=(i+1) * 350 * -1;
+    enemycar.style.top=enemycar.y+"px";
+    enemycar.style.background="red";
+    enemycar.style.left=Math.floor(Math.random()* 350) + "px";
+    gamearea.appendChild(enemycar)
+      
+}
 }
 
 

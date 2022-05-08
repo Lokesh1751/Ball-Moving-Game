@@ -5,11 +5,26 @@
 .hide{
    display: none; 
 }
-.car{
+.car,.enemy{
     width: 70px;
     height: 100px;
     background-color: blue;
     position: absolute;
-    top: 300px;
-    left: 350px ;
+    bottom: 120px ;
+}
+.gamearea{
+    width: 400px;
+    height: 100vh;
+    background: #2d3436;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+
+}
+.lines{
+    width: 10px;
+    height: 100px;
+    background-color: white;
+    position: absolute;
+    margin-left: 195px;
 }
