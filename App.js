@@ -22,6 +22,13 @@ function keyUp(e) {
   e.preventDefault();
   keys[e.key] = false;
 }
+function iscollide(a,b){
+    aRect=a.getBoundingClientRect();
+    bRect=a.getBoundingClientRect();
+    return !((aRect.top > bRect.bottom  || aRect.bottom <bRect.top || aRect.right<bRect.left || aRect.left>bRect.right))
+
+
+}
 function movelines(){
     let lines=document.querySelectorAll('.lines');
     lines.forEach(function(item){
@@ -33,12 +40,15 @@ function movelines(){
 
     })
 }
-function moveenemy(){
+function moveenemy(car){
     let enemy=document.querySelectorAll('.enemy');
     enemy.forEach(function(item){
+        if(iscollide(car,item)){
+            console.log("boom hit")
+        }
         if(item.y >=750){
             item.y= -300;
-            enemycar.style.left=Math.floor(Math.random()* 350) + "px";
+            item.style.left=Math.floor(Math.random()* 350) + "px";
         }
         item.y+=player.speed;
         item.style.top=item.y+"px";
@@ -52,7 +62,7 @@ function gameplay() {
 
     if (player.start) {
         movelines();
-        moveenemy();
+        moveenemy(car);
       if (keys.ArrowUp && player.y>(road.top + 70)) {
         player.y -= player.speed;
       }
@@ -92,7 +102,7 @@ function start() {
   for(var i=0;i<3;i++){
     let enemycar=document.createElement("div")
     enemycar.setAttribute("class","enemy")
-    enemycar.y=(i+1) * 350 * -1;
+    enemycar.y=(i+1) * 350 * (-1);
     enemycar.style.top=enemycar.y+"px";
     enemycar.style.background="red";
     enemycar.style.left=Math.floor(Math.random()* 350) + "px";
