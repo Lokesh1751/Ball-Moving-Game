@@ -25,7 +25,7 @@ function keyUp(e) {
 function iscollide(a,b){
     aRect=a.getBoundingClientRect();
     bRect=b.getBoundingClientRect();
-    return !((aRect.top > bRect.bottom  || aRect.bottom <bRect.top || aRect.right<bRect.left || aRect.left>bRect.right))
+    return !((aRect.top > bRect.bottom  || aRect.bottom <bRect.top || aRect.right<=bRect.left || aRect.left>=bRect.right))
 }
 function movelines(){
     let lines=document.querySelectorAll('.lines');
@@ -41,6 +41,8 @@ function movelines(){
 function endgame(){
   player.start=false;
   startscreen.classList.remove("hide")
+  startscreen.innerHTML="Game Over <br> Your final score is:" +
+  player.score + "<br>"+ "Press here to restart the Game" 
 }
 function moveenemy(car){
     let enemy=document.querySelectorAll('.enemy');
@@ -111,7 +113,7 @@ function start() {
     enemycar.setAttribute("class","enemy")
     enemycar.y=(i+1) * 350 * (-1);
     enemycar.style.top=enemycar.y+"px";
-    enemycar.style.background="red";
+    enemycar.style.backgroundColor="red";
     enemycar.style.left=Math.floor(Math.random()* 350) + "px";
     gamearea.appendChild(enemycar)
       
