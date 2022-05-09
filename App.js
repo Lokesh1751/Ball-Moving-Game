@@ -2,7 +2,7 @@ const score = document.querySelector(".score");
 const startscreen = document.querySelector(".startscreen");
 const gamearea = document.querySelector(".gamearea");
 startscreen.addEventListener('click', start);
-let player = {speed:5};
+let player = {speed:5,score:0};
 let keys = {
   ArrowUp: false,
   ArrowDown: false,
@@ -24,10 +24,8 @@ function keyUp(e) {
 }
 function iscollide(a,b){
     aRect=a.getBoundingClientRect();
-    bRect=a.getBoundingClientRect();
+    bRect=b.getBoundingClientRect();
     return !((aRect.top > bRect.bottom  || aRect.bottom <bRect.top || aRect.right<bRect.left || aRect.left>bRect.right))
-
-
 }
 function movelines(){
     let lines=document.querySelectorAll('.lines');
@@ -40,11 +38,16 @@ function movelines(){
 
     })
 }
+function endgame(){
+  player.start=false;
+  startscreen.classList.remove("hide")
+}
 function moveenemy(car){
     let enemy=document.querySelectorAll('.enemy');
     enemy.forEach(function(item){
         if(iscollide(car,item)){
             console.log("boom hit")
+            endgame();
         }
         if(item.y >=750){
             item.y= -300;
@@ -78,13 +81,17 @@ function gameplay() {
       car.style.top=player.y + "px";
       car.style.left=player.x + "px";
       window.requestAnimationFrame(gameplay);
+      player.score++;
+      score.innerText="Score:" + " " + player.score;
     }
   }
 
 function start() {
-  gamearea.classList.remove("hide");
+ // gamearea.classList.remove("hide");
   startscreen.classList.add("hide");
+  gamearea.innerHTML="";
   player.start = true;
+  player.score=0;
   window.requestAnimationFrame(gameplay);
   for(var i=0;i<6;i++){
     let roadline=document.createElement("div")
@@ -110,5 +117,3 @@ function start() {
       
 }
 }
-
-
