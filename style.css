@@ -91,5 +91,6 @@
     box-shadow: 0 5px 5px #777;
 }
 .cargame{
-background-color: greenyellow;
+background:url('bg.jpg');
+background-repeat: no-repeat;
 }
