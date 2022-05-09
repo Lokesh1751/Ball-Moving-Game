@@ -42,7 +42,7 @@ function endgame(){
   player.start=false;
   startscreen.classList.remove("hide")
   startscreen.innerHTML="Game Over <br> Your final score is:" +
-  player.score + "<br>"+ "Press here to restart the Game" 
+  player.score + 1 + "<br>"+ "Press here to restart the Game" 
 }
 function moveenemy(car){
     let enemy=document.querySelectorAll('.enemy');
